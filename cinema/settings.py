@@ -24,6 +24,10 @@ INSTALLED_APPS = [
     # adding django DRF
     'rest_framework',
 
+    # Apps
+    'account',
+
+    # Django Packages
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
