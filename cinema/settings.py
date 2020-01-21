@@ -1,5 +1,6 @@
 import os
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,21 +13,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
-    # adding django DRF
-    'rest_framework',
-
-    # Apps
-    'account',
-
     # Django Packages
     'django.contrib.admin',
     'django.contrib.auth',
@@ -34,6 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # installed packages
+    'minio_storage',
+    'rest_framework',
+
+    # Apps
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -112,8 +112,35 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Minio sever settings
+MINIO_ENDPOINT = config('MINIO_ENDPOINT')
+MINIO_ACCESS_KEY = config('MINIO_ACCESS_KEY')
+MINIO_SECRET_KEY = config('MINIO_SECRET_KEY')
+MINIO_USE_HTTPS = config('MINIO_USE_HTTPS')
+MINIO_PRIVATE_BUCKET_NAME = config('MINIO_PRIVATE_BUCKET_NAME')
+MINIO_PUBLIC_BUCKET_NAME = config('MINIO_PUBLIC_BUCKET_NAME')
+MINIO_URL_EXPIRY_HOURS = timedelta(days=1)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Media Settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Minio configuration
+DEFAULT_FILE_STORAGE = "minio_storage.storage.MinioMediaStorage"
+MINIO_STORAGE_ACCESS_KEY = config('MINIO_ACCESS_KEY')
+MINIO_STORAGE_SECRET_KEY = config('MINIO_SECRET_KEY')
+MINIO_STORAGE_ENDPOINT = config('MINIO_STORAGE_ENDPOINT')
+MINIO_STORAGE_MEDIA_BUCKET_NAME = config('MINIO_PUBLIC_BUCKET_NAME')
+MINIO_STORAGE_STATIC_BUCKET_NAME = config('MINIO_PRIVATE_BUCKET_NAME')
+MINIO_STORAGE_STATIC_URL = config('MINIO_STORAGE_STATIC_URL')
+MINIO_STORAGE_USE_HTTPS = False
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET = True
+MINIO_STORAGE_MEDIA_USE_PRESIGNED = True
+MINIO_STORAGE_STATIC_USE_PRESIGNED = True

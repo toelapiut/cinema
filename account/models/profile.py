@@ -17,6 +17,7 @@ class Profile(models.Model):
     longitude = models.DecimalField(max_digits=8, decimal_places=6, default=0)
     latitude = models.DecimalField(max_digits=8, decimal_places=6, default=0)
     address = models.CharField(blank=True, null=True, max_length=80)
+    avatar = models.ImageField(upload_to='media/profiles', null=True, blank=True)
     postal_code = models.CharField(blank=True, null=True, max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
