@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Apps
+    'watch',
     'account',
 ]
 
@@ -112,18 +113,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Minio sever settings
-MINIO_ENDPOINT = config('MINIO_ENDPOINT')
-MINIO_ACCESS_KEY = config('MINIO_ACCESS_KEY')
-MINIO_SECRET_KEY = config('MINIO_SECRET_KEY')
-MINIO_USE_HTTPS = config('MINIO_USE_HTTPS')
-MINIO_PRIVATE_BUCKET_NAME = config('MINIO_PRIVATE_BUCKET_NAME')
-MINIO_PUBLIC_BUCKET_NAME = config('MINIO_PUBLIC_BUCKET_NAME')
-MINIO_URL_EXPIRY_HOURS = timedelta(days=1)
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
 STATIC_URL = '/static/'
 
 # Media Settings
