@@ -52,8 +52,13 @@ REST_FRAMEWORK = {
 # Elasticsearch configuration
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': config('ELASTIC_SEARCH_HOST')
     },
+}
+
+# Name of the Elasticsearch index
+ELASTICSEARCH_INDEX_NAMES = {
+    'search.documents.movies': 'movies',
 }
 
 # Middleware
