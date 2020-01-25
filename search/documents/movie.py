@@ -16,7 +16,7 @@ INDEX.settings(
 html_strip = analyzer(
     'html_strip',
     tokenizer="standard",
-    filter=["standard", "lowercase", "stop", "snowball"],
+    filter=["lowercase", "stop", "snowball"],
     char_filter=["html_strip"]
 )
 
@@ -35,37 +35,46 @@ class MovieDocument(Document):
     updated_at
     """
     id = fields.IntegerField(attr='id')
-    imdb_id = fields.IntegerField(attr='id')
-    title = fields.StringField(
+    imdb_id = fields.TextField(
         analyzer=html_strip,
+        fielddata=True,
         fields={
-            'raw': fields.StringField(analyzer='keyword'),
+            'raw': fields.TextField(analyzer='keyword'),
         }
     )
-    summary = fields.StringField(
+    title = fields.TextField(
         analyzer=html_strip,
         fields={
-            'raw': fields.StringField(analyzer='keyword')
+            'raw': fields.TextField(analyzer='keyword'),
+        }
+    )
+    summary = fields.TextField(
+        analyzer=html_strip,
+        fielddata=True,
+        fields={
+            'raw': fields.TextField(analyzer='keyword')
         }
     )
     release_date = fields.DateField()
-    rating = fields.StringField(
+    rating = fields.TextField(
         analyzer=html_strip,
+        fielddata=True,
         fields={
-            'raw': fields.StringField(analyzer='keyword')
+            'raw': fields.TextField(analyzer='keyword')
         }
     )
-    runtime = fields.StringField(
+    runtime = fields.TextField(
         analyzer=html_strip,
+        fielddata=True,
         fields={
-            'raw': fields.StringField(analyzer='keyword')
+            'raw': fields.TextField(analyzer='keyword')
         }
     )
-    genre = fiels.StringField(
+    genre = fields.TextField(
         attr='genre_indexing',
         analyzer=html_strip,
         fields={
-            'raw': fields.StringField(analyzer='keyword', multi=True),
+            'raw': fields.TextField(analyzer='keyword', multi=True),
             'suggest': fields.CompletionField(multi=True),
         },
         multi=True
@@ -74,7 +83,6 @@ class MovieDocument(Document):
 
     class Django(object):
         """
-        Inner nested class Django.
         The model associate with this Document
         """
         model = Movie
